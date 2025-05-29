@@ -26,18 +26,31 @@ I started this challenge to:
 
 ## 📁 Folder Structure
 JavaScript-30/
+
 │
+
 ├── day1/ # Day 1 project: Drum Kit
+
 │ ├── index.html
+
 │ ├── style.css
+
 │ ├── script.js
+
 │ └── sound/ # Sound files
+
 │
+
 ├── day2/ 
+
 │ └── ...
+
 │
+
 ├── index.html
+
 ├── style.css
+
 └── README.md # This file
 
 ---
