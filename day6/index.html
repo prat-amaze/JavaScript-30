@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Type ahead</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="body">
+        <input id="search" type="text">
+        <ul id="suggestions">
+            <!-- <li>
+                <div class="subDiv">
+                    <p>New York, New York</p>
+                    <p>19982</p>
+                </div>
+            </li> -->
+            <!-- <div class="break"></div> -->
+        </ul>
+
+        <script>
+            const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+            let myData = [];
+
+            async function getData() {
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                myData = data.map(obj => ({
+                    city: obj.city,
+                    state: obj.state,
+                    population: obj.population
+                }));
+                // console.log(myData);
+            }
+
+            // Call it once when page loads
+            getData();
+            
+            const suggestions = document.getElementById("suggestions")
+            const search = document.getElementById('search')
+
+            search.addEventListener('input', event => {
+            const prompt = event.target.value;
+            
+            // Clear previous results
+            suggestions.innerHTML = '';
+
+            const sugg = myData.filter(item => {
+                return item.city.toLowerCase().includes(prompt.toLowerCase()) ||
+                    item.state.toLowerCase().includes(prompt.toLowerCase());
+            });
+
+            sugg.forEach((item) => {
+                const l = document.createElement('li');
+                const d = document.createElement('div');
+                d.className = 'subDiv';
+
+                const p1 = document.createElement('p');
+                const regex = new RegExp(prompt, 'gi');
+
+                const highlightedCity = item.city.replace(regex, match => `<span class="highlight">${match}</span>`);
+                const highlightedState = item.state.replace(regex, match => `<span class="highlight">${match}</span>`);
+
+                p1.innerHTML = `${highlightedCity}, ${highlightedState}`;
+
+                const p2 = document.createElement('p');
+                p2.textContent = item.population;
+
+                d.appendChild(p1);
+                d.appendChild(p2);
+                l.appendChild(d);
+                suggestions.appendChild(l);
+
+                const b= document.createElement('div')
+                b.className = 'break'
+                suggestions.appendChild(b);
+
+            });
+        });
+        </script>
+    </div>
+</body>
+</html>
