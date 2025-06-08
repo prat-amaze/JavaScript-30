@@ -50,7 +50,9 @@
         const obj= comments.findIndex(finding)
         console.log(obj);
         // delete the comment with the ID of 823423
-        console.table(comments.slice(0, obj).concat(comments.slice(obj+1, comments.length)));
+        comments.splice(obj, 1)
+        console.table(comments);
+        // console.table(comments.slice(0, obj).concat(comments.slice(obj+1, comments.length)));
       </script>
     </div>
   </body>
