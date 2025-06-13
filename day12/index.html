@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konami Code</title>
+    <script src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+
+<body>
+    <h1>Konami Codes</h1>
+    <script>
+        let konamiCodes = [
+            { code: ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft', 'ArrowUp'], action: () => alert("matched 1") },
+            { code: ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft', 'ArrowDown'], action: () => alert("matched 2") },
+            { code: ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft', 'ArrowRight'], action: () => alert("Please leave my website") },
+        ];
+
+        konamiCodes.forEach(({code, action})=> {
+            let d= document.createElement('div')
+            d.style.margin = '8px 0';
+            d.style.fontSize = '18px';
+            let text = code.join(" -> ")
+            d.innerText= text;
+            document.body.appendChild(d);
+        })
+
+        let curr = []
+
+        const matchFunc = (arr1, arr2) => {
+            if(arr1.length < arr2.length) return 0;
+
+            for(let i = 0; i < arr1.length; i++) {
+                if(arr1[i] !== arr2[i]) return 0;
+            }
+            return 1;
+        };
+
+        window.addEventListener('keyup', (e)=>{
+            let flag= false;
+            curr.push(e.key)
+
+            if(curr.length >5){
+                curr.splice(0, 1);
+            }
+
+            konamiCodes.forEach(({code, action}) => {
+                if(matchFunc(curr, code) == 1){
+                    // action();
+                    cornify_add();
+                }
+            });
+            console.log(curr);
+        })
+    </script>
+</body>
+
+</html>
