@@ -21,7 +21,7 @@
       <li>Loading Tapas...</li>
     </ul>
     <form class="add-items">
-      <input type="text" name="item" placeholder="Item Name" required>
+      <input type="text" name="item" class="itemName" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
   </div>
@@ -29,7 +29,45 @@
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
+  const itemName = document.querySelector('.itemName');
   const items = [];
+
+  function Submit(e){
+  e.preventDefault(); // prevent form reload
+  const value = itemName.value.trim();
+  if (!value) return;
+  
+  const ind = localStorage.length + 1;
+  localStorage.setItem(ind, value);
+  itemName.value = '';
+  renderItems();
+}
+
+function renderItems(){
+  itemsList.innerHTML = '';
+  for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      const value = localStorage.getItem(key);
+
+      const li = document.createElement('li');
+      const inp = document.createElement('input');
+      const label = document.createElement('label');
+
+      const inputId = `item-${key}`; // unique id
+      inp.type = 'checkbox';
+      inp.id = inputId;
+      label.setAttribute('for', inputId);
+      label.textContent = value;
+
+      li.appendChild(inp);
+      li.appendChild(label);
+      itemsList.appendChild(li);
+  }
+}
+
+addItems.addEventListener('submit', Submit);
+renderItems();
+
 
 </script>
 
