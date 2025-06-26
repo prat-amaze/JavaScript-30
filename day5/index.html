@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex display</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="body">
+        <div class="panel panel1">
+            <p>Hey</p>
+            <p>Let's</p>
+            <p>Dance</p>
+        </div>
+
+        <div class="panel panel2">
+            <p>Give</p>
+            <p>Take</p>
+            <p>Receive</p>
+        </div>
+
+        <div class="panel panel3">
+            <p>Experience</p>
+            <p>It</p>
+            <p>Today</p>
+        </div>
+
+        <div class="panel panel4">
+            <p>Give</p>
+            <p>All</p>
+            <p>You can</p>
+        </div>
+
+        <div class="panel panel5">
+            <p>Life</p>
+            <p>IN</p>
+            <p>Motion</p>
+        </div>
+
+        <script>
+            let arr= Array.from(document.body.children[0].children)
+            arr.forEach(e =>{
+                e.addEventListener('click', event =>{
+                    if (e.classList.contains('open-active')){
+                        e.classList.toggle('open-active')
+                    }
+                    else{
+                        arr.forEach(el => {
+                            if(el.classList.contains('open-active')){
+                                el.classList.remove('open-active')
+                            }
+                        });
+                        e.classList.toggle('open-active')
+                    }
+                })
+            })
+        </script>
+    </div>
+</body>
+</html>

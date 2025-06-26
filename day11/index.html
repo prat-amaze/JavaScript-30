@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="body">
+        <div class="frame">
+            <video id="video" width='100%' onclick="videoClicked()">
+                <source src="bbb.mp4" type="video/mp4">
+                Your browser does not support HTML video.
+            </video>
+
+            <div class="controlPanel">
+                <div class="progress">
+                    <div class="progressFilled"></div>
+                </div>
+
+                <div class="controls">
+                    <button id="play" class="play">
+                        ⏵
+                    </button>
+                    <input id="volume" onchange="handleSound(event)" class="slider" type="range">
+                    <input id="speed" onchange="handleSpeed(event)" class="slider" type="range">
+
+                    <button onclick="handleBack()" id="rewind"><< 10s</button>
+                    <button onclick="handleForward()" id="forward">25s >></button>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+
+
+    <script>
+        const video = document.getElementById('video')
+        video.volume= 0.5;
+        video.playbackRate= 1
+        const play = document.getElementById('play')
+        var r = document.querySelector(':root');
+        const controlPanel = document.querySelector(".controlPanel")
+
+
+        play.addEventListener('click', ()=>{
+            if(video.paused){
+                video.play()
+                play.innerText = "⏸"
+            }
+            else{
+                video.pause()
+                play.innerText = "⏵"
+            }
+        })
+
+        const handleSound= (e)=>{
+            video.volume= e.target.value/100
+        }
+        const handleSpeed= (e)=>{
+            video.playbackRate= e.target.value/50 > 0? e.target.value/50 : 0.1
+            console.log(video.playbackRate);
+        }
+        const handleBack = ()=>{
+            video.currentTime -= 10
+        }
+        const handleForward = ()=>{
+            video.currentTime += 25
+        }
+        const videoClicked= ()=>{
+            if(video.paused){
+                video.play()
+                play.innerText = "⏸"
+            }
+            else{
+                video.pause()
+                play.innerText = "⏵"
+            }
+        }
+
+        setInterval(()=>{
+            const prog = (video.currentTime / video.duration) * 100;
+            r.style.setProperty('--prog', `${prog}%`);
+        }, 100);
+
+        const progress = document.querySelector('.progress');
+
+        let isDragging = false;
+
+        progress.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mouseup', () => isDragging = false);
+        progress.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const percent = (e.offsetX/ progress.offsetWidth);
+                video.currentTime= video.duration * percent
+            }
+        });
+
+        progress.addEventListener('click', (e)=>{
+            const percent = (e.offsetX/ progress.offsetWidth);
+            video.currentTime= video.duration * percent
+        })
+
+
+    </script>
+</body>
+</html>

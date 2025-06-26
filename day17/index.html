@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sorted Bands Without Articles</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    #bands {
+      list-style: none;
+      background: #fff;
+      color: #333;
+      padding: 0;
+      margin: 0;
+      width: 400px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    #bands li {
+      padding: 12px 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #bands li:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <ul id="bands"></ul>
+
+  <script>
+    const bands = [
+      'The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil',
+      'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State',
+      'We Came as Romans', 'Counterparts', 'Oh, Sleeper',
+      'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'
+    ];
+
+    function sorter(a, b){
+      let arr1= a.toLowerCase().split(" ")
+      let arr2= b.toLowerCase().split(" ")
+
+      let notAllowed = ['the', 'a', 'an']
+
+      if(notAllowed.includes(arr1[0])){
+          arr1.splice(0, 1)
+      }
+      if(notAllowed.includes(arr2[0])){
+          arr2.splice(0, 1)
+      }
+
+      let c= arr1.join(" ");
+      let d= arr2.join(" ");
+      return c<=d ? -1: 1;
+    }
+
+    const sortedBands = bands.sort(sorter);
+
+    const ul = document.querySelector('#bands');
+    ul.innerHTML = sortedBands.map(band => `<li>${band}</li>`).join('');
+  </script>
+
+</body>
+</html>
